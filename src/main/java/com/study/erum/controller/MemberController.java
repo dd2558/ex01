@@ -1,5 +1,7 @@
 package com.study.erum.controller;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.study.erum.dto.MemberDTO;
 import com.study.erum.repository.MemberRepository;
@@ -86,4 +89,25 @@ public class MemberController {
 	      model.addAttribute("member",memberDTO);
 	      return "update";
 	   }
+	  
+	  @PostMapping("/update")
+	  public String update(@ModelAttribute MemberDTO memberDTO) {
+		  boolean result = memberService.update(memberDTO);
+		  if(result) {
+			  return "redirect:/member?id=" + memberDTO.getId();
+		  }else {
+			return "index";  
+		  }
+		  
+	  }
+	  
+	  @PostMapping("/email-check")
+	  public @ResponseBody String emailCheck(@RequestParam("memberEmail") String memberEmail){
+	    System.out.println("memberEmail = " + memberEmail);
+	    String checkResult = memberService.emailCheck(memberEmail);
+	    return checkResult;
+	  }
+
+	  
+	   
 }

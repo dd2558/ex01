@@ -24,10 +24,19 @@
 		select id, memberEmail, memberPassword, memberName, memberAge, memberMobile from member_table
 		where id=#{id}
 	</select>
+<!-- 수정을 위한 조회 -->
+	<select id="findByMemberEmail" parameterType="String" resultType="member">
+		select id, memberEmail, memberPassword, memberName, memberAge, memberMobile from member_table
+		where memberEmail=#{memberEmail}
+	</select>
 <!-- 수정 -->
-	
+	<select id="update" parameterType="member">
+		update member_table set memberAge = #{memberAge}, memberMobile = #{memberMobile}
+		where  id = #{id}
+	</select>
 <!-- 삭제 -->
 	<delete id="delete" parameterType="Long">
 		delete from member_table where id=#{id}
 	</delete>
+	
 </mapper>
