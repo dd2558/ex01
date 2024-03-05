@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Member"> <!-- 레포지토리에 리턴값 "Member. ~~ 쿼리문" -->
+
+<!-- 데이터 삽입 -->
+    <insert id="save" parameterType="member">
+        insert into member_table(memberEmail, memberPassword, memberName, memberAge, memberMobile)
+        values (#{memberEmail}, #{memberPassword}, #{memberName}, #{memberAge}, #{memberMobile})
+    </insert>
+    
+<!-- 로그인 -->
+    <select id="login" parameterType="member" resultType="member">
+    	select memberEmail, memberPassword, memberName, memberAge, memberMobile from member_table 
+    	where memberEmail=#{memberEmail} and memberPassword=#{memberPassword}
+    </select>
+<!-- 목록보기 -->    
+    <select id="findAll" resultType="member">
+    	select id, memberEmail, memberPassword, memberName, memberAge, memberMobile from member_table
+    </select>
+    
+<!-- 상세보기 -->
+	<select id="findById" parameterType="member" resultType="member">
+		select id, memberEmail, memberPassword, memberName, memberAge, memberMobile from member_table
+		where id=#{id}
+	</select>
+<!-- 수정 -->
+	
+<!-- 삭제 -->
+	<delete id="delete" parameterType="Long">
+		delete from member_table where id=#{id}
+	</delete>
+</mapper>
